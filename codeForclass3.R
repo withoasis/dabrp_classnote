@@ -1,3 +1,4 @@
+Sys.setlocale("LC_ALL","ko_KR.UTF-8")
 
 if(TRUE){print(1)}
 print(2)
@@ -45,7 +46,7 @@ if(x>10) {
 print(4)
 
 library(readr)
-sd<-read_csv("./data/RecomData/제3회 Big Data Competition-분석용데이터-05.멤버십여부.txt")
+sd<-read_csv("./제3회 Big Data Competition-분석용데이터-05.멤버십여부.txt")
 names(sd)[1]<-"고객번호"
 sd<-data.frame(sd)
 
