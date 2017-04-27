@@ -5,7 +5,7 @@ library(RMySQL)
 
 # tem<-fread("./bank/train_ver2.csv")
 con <- dbConnect(dbDriver("MySQL"), dbname = "bank", user = "root", 
-                 password = "XXXXX")
+                 password = "XXXXX") 
 
 dbListTables(con)
 dbWriteTable(con, "mtcars", mtcars)
