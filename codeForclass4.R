@@ -1,6 +1,6 @@
-install.packages("data.table")
-install.packages("RMySQL")
-library(data.table)
+# install.packages("data.table")
+# install.packages("RMySQL")
+# library(data.table)
 library(RMySQL)
 
 # tem<-fread("./bank/train_ver2.csv")
