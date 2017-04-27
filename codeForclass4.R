@@ -23,7 +23,3 @@ dbClearResult(query)
 dbDisconnect(con)
 
 
-
-
-
-
