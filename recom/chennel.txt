@@ -1,4 +1,4 @@
-������ȣ,���޻�,�̿�Ƚ��
+﻿고객번호,제휴사,이용횟수
 00007,A_MOBILE/APP,4
 00014,A_MOBILE/APP,1
 00042,B_MOBILE/APP,23
