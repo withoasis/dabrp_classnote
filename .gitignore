@@ -3,3 +3,5 @@
 .RData
 .Ruserdata
 bankData/*
+recom/tran*
+recomen/tran*
