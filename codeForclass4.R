@@ -8,5 +8,6 @@ con <- dbConnect(dbDriver("MySQL"), dbname = "bank", user = "root")
 
 query.result <- dbSendQuery(con, "SELECT * FROM train limit 10")
 test.table <- fetch(query.result)
-test.table
+t
+est.table
 ß
