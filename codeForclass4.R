@@ -186,3 +186,4 @@ dim(join2)
 str(join2)
 summary(join2)
 
+dbDisconnect(con)
