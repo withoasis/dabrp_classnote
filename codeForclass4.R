@@ -1,7 +1,17 @@
-devtools::install_github("rstats-db/DBI")
-devtools::install_github("rstats-db/RMySQL")
-# library(DBI)
+if (!require("data.table")) {install.packages("data.table") }
+if (!require("DBI")){devtools::install_github("rstats-db/DBI")}
+if (!require("RMySQL")){devtools::install_github("rstats-db/RMySQL")}
+
+library(data.table)
 library(RMySQL)
+
+options(stringsAsFactors = F)
+
+test<-"http://scgailabs.duckdns.org/oc/index.php/s/3YQuCOH39HbI1nW/download"
+dir.create("./bankData")
+download.file(test,destfile="./bankData/test_ver2.txt",mode='wb')
+train<-"http://scgailabs.duckdns.org/oc/index.php/s/0ow1ZJId93uSgfc/download"
+download.file(train,destfile="./bankData/train_ver2.txt",mode='wb')
 
 con <- dbConnect(RMySQL::MySQL(), dbname = "bank", user = "root", 
                  password = "XXX") 
@@ -74,31 +84,34 @@ dbDisconnect(con)
 
 library(readr)
 library(data.table)
-chennel<-read_csv("./recom/chennel.txt")
-competitor<-read_csv("./recom/competitor.txt")
-customer<-read_csv("./recom/customer.txt")
-item<-read_csv("./recom/item.txt")
-membership<-read_csv("./recom/membership.txt")
-tran<-fread("./recom/transection.txt")
+# recomt<-"http://scgailabs.duckdns.org/oc/index.php/s/fk6gISGj9wKLUbq/download"
+# download.file(recomt,destfile="./recom/transection.txt",mode='wb')
+# 
+# chennel<-read_csv("./recom/chennel.txt")
+# competitor<-read_csv("./recom/competitor.txt")
+# customer<-read_csv("./recom/customer.txt")
+# item<-read_csv("./recom/item.txt")
+# membership<-read_csv("./recom/membership.txt")
+# tran<-fread("./recom/transection.txt")
+# 
+# names(chennel)<-c("cusID","partner","useCnt")
+# names(competitor)<-c("cusID","partner","competitor","useDate")
+# names(customer)<-c("cusID","sex","age","area")
+# names(item)<-c("partner","cate_1","cate_2",'cate_3',
+#                "cate_2_name","cate_3_name")
+# names(membership)<-c("cusID","memberShip","regDate")
+# names(tran)<-c("partner","receiptNum","cate_1","cate_2","cate_3",
+#                "cusID","storeCode","date","time","amount")
+# 
+# write_csv(chennel,"./recomen/chennel.csv")
+# write_csv(competitor,"./recomen/competitor.csv")
+# write_csv(customer,"./recomen/customer.csv")
+# write_csv(item,"./recomen/item.csv")
+# write_csv(membership,"./recomen/membership.csv")
+# fwrite(tran,"./recomen/tran.csv")
 
-names(chennel)<-c("cusID","partner","useCnt")
-names(competitor)<-c("cusID","partner","competitor","useDate")
-names(customer)<-c("cusID","sex","age","area")
-names(item)<-c("partner","cate_1","cate_2",'cate_3',
-               "cate_2_name","cate_3_name")
-names(membership)<-c("cusID","memberShip","regDate")
-names(tran)<-c("partner","receiptNum","cate_1","cate_2","cate_3",
-               "cusID","storeCode","date","time","amount")
-
-write_csv(chennel,"./recomen/chennel.csv")
-write_csv(competitor,"./recomen/competitor.csv")
-write_csv(customer,"./recomen/customer.csv")
-write_csv(item,"./recomen/item.csv")
-write_csv(membership,"./recomen/membership.csv")
-fwrite(tran,"./recomen/tran.csv")
-
-dbDisconnect(con)
-
+recoment<-"http://scgailabs.duckdns.org/oc/index.php/s/jISrPutj4ocLci2/download"
+download.file(recoment,destfile="./recomen/tran.csv",mode='wb')
 
 con <- dbConnect(RMySQL::MySQL(), dbname = "bank", user = "root", 
                  password = "XXXXXX") 
