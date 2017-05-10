@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-bankData/*
+bankData/train*
+bankData/test*
 recom/tran*
 recomen/tran*
