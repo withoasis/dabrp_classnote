@@ -18,7 +18,7 @@ options(stringsAsFactors = F)
 # layers = data + mapping(aes) + geom + stat + position
 # ggplot = layers + scales + coordinate system
 
-# http://www.gapminder.org/world/
+# 데이터 설명 : https://github.com/jennybc/gapminder
 if (!require("gapminder")){install.packages("gapminder")}
 library(gapminder)
 
@@ -149,7 +149,6 @@ gapminder %>% filter(country %in% jCountries) %>%
   ggplot(aes(x = year, y = lifeExp, color = reorder(country, -1 * lifeExp, max))) +
   geom_line() + geom_point()
 
-
 # bin2d 차트
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
   scale_x_log10() + geom_bin2d()
@@ -158,6 +157,83 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
 if (!require("hexbin")){install.packages("hexbin")}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
   scale_x_log10() + geom_hex()
+
+# 대륙별 관측치 개수 구하기
+table(gapminder$continent)
+
+# histogram 그리기
+ggplot(gapminder, aes(x = continent)) + geom_bar()
+
+# 크기순으로 재정렬
+# reorder(정렬하고자 하는 대상, 정렬 기준, 정렬 조건)
+p <- ggplot(gapminder, aes(x = reorder(continent, continent, length)))
+p + geom_bar()
+
+# coordinate 함수 중 돌리기
+p + geom_bar() + coord_flip()
+
+# goem_bar 특징 조절하기
+p + geom_bar(width = 0.1) + coord_flip()
+
+# length 를 계산해서 그래프 그리기
+(continent_freq <- gapminder %>% count(continent))
+# bar plot이 마음대로 그려지지 않음
+(freq_plot <- ggplot(continent_freq, aes(x = continent)) + geom_bar())
+# stat이 count인 것을 확인(bar는 default가 count)
+summary(freq_plot)
+# 계산을 한 데이터로 bar plot 출력하는 법
+(freq_ident<-ggplot(continent_freq, aes(x = continent, y = n)) + geom_bar(stat = "identity"))
+summary(freq_ident)
+
+# historam 옵션을 사용하기
+ggplot(gapminder, aes(x = lifeExp)) +
+  geom_histogram()
+
+# geom 조절하기 bin은 나누는 구간의 크기를 의미
+ggplot(gapminder, aes(x = lifeExp)) +
+  geom_histogram(binwidth = 1)
+
+# 각 대륙별로 나눠서 보기
+(hist_fill<-ggplot(gapminder, aes(x = lifeExp, fill = continent)) +
+  geom_histogram())
+
+# stack이 기본 옵션임(누적 그래프)
+summary(hist_fill)
+
+# 최대값이 독립적이 되게 작성
+ggplot(gapminder, aes(x = lifeExp, fill = continent)) +
+  geom_histogram(position = "identity")
+
+# 밀도함수 - 선색
+ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density()
+
+# 밀도함수 - 면적 색
+ggplot(gapminder, aes(x = lifeExp, fill = continent)) +
+  geom_density(alpha = 0.2)
+
+# point에서 정보가 충분히 보이지 않을 때
+ggplot(gapminder, aes(x = continent, y = lifeExp)) + geom_point()
+
+# jitter 흩뿌리기
+ggplot(gapminder, aes(x = continent, y = lifeExp)) + geom_jitter()
+
+# jitter geom 조절하기
+ggplot(gapminder, aes(x = continent, y = lifeExp)) + 
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
+
+# boxplot 평균 및 4분위 표시
+ggplot(gapminder, aes(x = continent, y = lifeExp)) + geom_boxplot()
+
+# layer 겹치게 그리기
+ggplot(gapminder, aes(x = continent, y = lifeExp)) +
+  geom_boxplot(outlier.colour = "hotpink") +
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
+
+# stat 기능으로 layer 추가하기
+ggplot(gapminder, aes(x = continent, y = lifeExp)) + 
+  geom_jitter(position = position_jitter(width = 0.1), alpha = 1/4) +
+  stat_summary(fun.y = median, colour = "red", geom = "point", size = 5)
+
 
 ## korean map
 
