@@ -4,9 +4,15 @@ if (!require("RMySQL")){devtools::install_github("rstats-db/RMySQL")}
 library(RMySQL)
 options(stringsAsFactors = F)
 
-con <- dbConnect(RMySQL::MySQL(), dbname = "bank", user = "root",password="xxx")
+sql_db = src_mysql(dbname="bank",user = "root")
+chen = tbl(sql_db, 'chennel')
+comp = tbl(sql_db, 'competitor')
+cust = tbl(sql_db, 'customer')
+item = tbl(sql_db, 'item')
+memb = tbl(sql_db, 'membership')
+tran = tbl(sql_db, 'tran')
 
-dbListTables(con)
-system.time(dbWriteTable(con, "train", "./bankData/train_ver2.csv",row.names=F))
-# 사용자  시스템 elapsed 
-# 0.68    7.36  391.80 
+Sys.setlocale("LC_ALL","ko_KR.UTF-8")
+
+data<-chen %>% filter(useCnt>10)
+collect(data)

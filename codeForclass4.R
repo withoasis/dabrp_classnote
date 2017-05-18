@@ -62,6 +62,8 @@ dbListTables(con)
 
 # you can write table from file directly.
 system.time(dbWriteTable(con, "train", "./bankData/train_ver2.csv",row.names=F))
+# 사용자  시스템 elapsed 
+# 0.68    7.36  391.80 
 
 # check table row number approximately. It's fast.
 dbGetQuery(con,"select TABLE_ROWS from information_schema.tables where table_name = 'train'")
