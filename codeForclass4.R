@@ -16,9 +16,8 @@ download.file(test,destfile="./bankData/test_ver2.csv",mode='wb')
 train<-"http://rcoholic.duckdns.org/oc/index.php/s/0ow1ZJId93uSgfc/download"
 download.file(train,destfile="./bankData/train_ver2.csv",mode='wb')
 
-
 # connect mysql
-con <- dbConnect(RMySQL::MySQL(), dbname = "bank", user = "root")
+con <- dbConnect(RMySQL::MySQL(), dbname = "bank", user = "root",password="xxx")
 
 # check number of connections
 dbGetQuery(con, "show processlist")
@@ -62,7 +61,7 @@ dbRemoveTable(con,"mtcars")
 dbListTables(con)
 
 # you can write table from file directly.
-dbWriteTable(con, "train", "./bankData/train_ver2.csv",row.names=F)
+system.time(dbWriteTable(con, "train", "./bankData/train_ver2.csv",row.names=F))
 
 # check table row number approximately. It's fast.
 dbGetQuery(con,"select TABLE_ROWS from information_schema.tables where table_name = 'train'")
@@ -167,10 +166,10 @@ dbGetQuery(con, "select * from membership limit 10")
 dbGetQuery(con, "select * from tran limit 10")
 
 # inner join
-query <- dbSendQuery(con, "select * from membership as a 
+query <- dbGetQuery(con, "select * from membership as a 
                      inner join customer as b on
                      a.cusID = b.cusID")
-join1 <- dbFetch(query)
+join1 <-query
 
 dim(join1)
 str(join1)

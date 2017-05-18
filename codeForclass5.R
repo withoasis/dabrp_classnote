@@ -157,7 +157,7 @@ tbl(sqlite_db, sql('SELECT * FROM mtcars'))
 iris_db = tbl(sqlite_db, 'mtcars')
 iris_db %>% filter(mpg > 20)
 
-sql_db = src_mysql(dbname="bank",user = "root",password = "XXXXX")
+sql_db = src_mysql(dbname="bank",user = "root",password = "ms1049er")
 sql_db
 
 
