@@ -19,6 +19,7 @@ options(stringsAsFactors = F)
 # ggplot = layers + scales + coordinate system
 
 # 데이터 설명 : https://github.com/jennybc/gapminder
+# 시각화 예시 : http://www.gapminder.org/tools/#_locale_id=en;&chart-type=bubbles
 if (!require("gapminder")){install.packages("gapminder")}
 library(gapminder)
 
