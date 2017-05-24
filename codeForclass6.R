@@ -65,7 +65,7 @@ p_point + geom_smooth(lwd = 2, se = FALSE, method = "lm")
 
 # 색정보를 전체에 반형하기
 p_point_color + geom_smooth(lwd = 2, se = FALSE)
-p + aes(color = continent) + geom_point() + geom_smooth(lwd = 2, se = FALSE)
+p + aes(color = continent) + geom_point() + geom_smooth(lwd = 1, se = FALSE)
 
 # group 과 color
 p + aes(color = continent) + geom_point() + geom_smooth(lwd = 2, se = FALSE)
@@ -82,18 +82,22 @@ p + geom_point(alpha = (1/3), size = 3) +
 # jitter : 집중된 정보를 흩뿌려 보여주는 특별한 geom_point
 ggplot(gapminder, aes(x = year, y = lifeExp,
                       color = continent)) +
-  geom_jitter(alpha = 1/3, size = 3)
+  geom_jitter(alpha = 1/3, size = 3, width=1)
+
+ggplot(gapminder, aes(x = year, y = lifeExp,
+                      color = continent)) +
+  geom_point(alpha = 1/3, size = 3)
 
 # 대륙별로 차트 나눠 그리기
 ggplot(gapminder, aes(x = year, y = lifeExp,
                       color = continent)) +
   facet_wrap(~ continent) +
-  geom_jitter(alpha = 1/3, size = 3)
+  geom_jitter(alpha = 1/3, size = 3, width=1)
 
 # 각 차트의 척도 기준 조절하기(default = "fixed")
 ggplot(gapminder, aes(x = year, y = lifeExp,
                       color = continent)) +
-  facet_wrap(~ continent, scales = "free_x") +
+  facet_wrap(~ continent, scales = "free_y") +
   geom_jitter(alpha = 1/3, size = 3)
 
 # scale 함수로 색 조절하기
@@ -125,7 +129,8 @@ lp + geom_smooth(se = FALSE, lwd = 2) +
 
 # geom은 각 개별이 layer이므로 추가됨
 lp + geom_smooth(se = FALSE, lwd = 2) +
-  geom_smooth(se = FALSE, method ="lm", color = "orange", lwd = 2)
+  geom_smooth(se = FALSE, method ="lm", color = "orange", lwd = 2) +
+  facet_wrap(~ continent)
 
 # 객체 준비하기
 lpf <- lp + facet_wrap(~ continent)
@@ -157,7 +162,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
 # 헥사 차트
 if (!require("hexbin")){install.packages("hexbin")}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
-  scale_x_log10() + geom_hex()
+  scale_x_log10() + geom_hex() + scale_fill_gradient(high = "#132B43", low = "#56B1F7")
 
 # 대륙별 관측치 개수 구하기
 table(gapminder$continent)
@@ -280,6 +285,7 @@ qtm(korpopmap2,"총인구_명")+tm_layout(fontfamily="NanumGothic")
 
 # 인코딩 문제 고치기
 Encoding(names(korpopmap1))<-"UTF-8"
+Encoding(names(korpopmap2))<-"UTF-8"
 # ggplot 으로 한국 지도 그리기 위한 전처리
 kor <- fortify(korpopmap1, region = "id")
 kordf <- merge(kor, korpopmap1@data, by = "id")
@@ -355,7 +361,7 @@ election <- ggplot(c_korea.df, aes(x=long, y=lat, group=group)) +
   geom_polygon(aes(alpha=RatioS), fill=rgb(1,0,0), colour="white", lwd = 0.01) +
   geom_polygon(aes(alpha=RatioP), fill=rgb(0,1,0), colour="white", lwd = 0.01) +
   geom_polygon(aes(alpha=RatioT), fill=rgb(0,0,1), colour="white", lwd = 0.01) +
-  guides(fill=FALSE, alpha=FALSE) + theme_clean()
+  guides(fill=FALSE, alpha=FALSE) + theme_clean() + coord_map()
 
 election
 
@@ -576,5 +582,6 @@ install.packages("ggedit")
 library(ggedit)
 p <- ggplot(mtcars, aes(x = hp, y = wt)) + 
   geom_point() + geom_smooth(method = 'loess')
+p
 ggedit(p)
 
